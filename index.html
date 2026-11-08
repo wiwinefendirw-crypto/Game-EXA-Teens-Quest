@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exa Teens Quest Homework Games</title>
+<style>
+:root{--bg:#FFD23F;--fg:#1B2A4A;--card:#fff;--ac:#E85D5D;--ok:#2e9e5b;--no:#d64545;--mut:#4A5878;--bd:#1B2A4A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101828;--fg:#f3f5fa;--card:#1d2a47;--mut:#b3bdd4;--bd:#7d8bb0}}
+:root[data-theme="dark"]{--bg:#101828;--fg:#f3f5fa;--card:#1d2a47;--mut:#b3bdd4;--bd:#7d8bb0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Trebuchet MS",system-ui,sans-serif;min-height:100vh}
+#app{max-width:560px;margin:0 auto;padding:14px}
+.logo{background:#fff;border-radius:16px;padding:8px 12px;display:flex;justify-content:center;margin-bottom:12px}
+.logo svg{width:100%;max-width:250px;height:auto}
+.card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.c{text-align:center}
+h1{margin:0 0 4px;font-size:24px}h2{margin:6px 0 12px;font-size:20px;line-height:1.35}
+p{margin:6px 0;color:var(--mut)}
+input{width:100%;padding:12px;font-size:17px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--fg);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+button{font:inherit;cursor:pointer;color:var(--fg)}
+.chip{padding:8px 12px;border-radius:999px;border:2px solid var(--bd);background:var(--card)}
+.chip.on{background:var(--fg);color:var(--card)}
+.b,.mode{display:block;width:100%;padding:13px;margin:8px 0;border:0;border-radius:14px;background:var(--ac);color:#fff;font-weight:700;font-size:17px;text-align:left;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.mode small{display:block;font-weight:400;font-size:13px;opacity:.95}
+.b{text-align:center}
+.o{display:block;width:100%;padding:13px;margin:8px 0;border-radius:12px;border:2px solid var(--bd);background:var(--card);font-size:17px;text-align:left}
+.o.ok{background:var(--ok);color:#fff;border-color:var(--ok)}.o.no{background:var(--no);color:#fff;border-color:var(--no)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700}
+.x{border:2px solid var(--bd);background:var(--card);border-radius:10px;padding:4px 10px}
+.tm{height:10px;background:rgba(127,127,127,.3);border-radius:9px;overflow:hidden;margin-bottom:8px}
+.tm i{display:block;height:100%;width:100%;background:var(--ac)}
+.bl{display:inline-block;min-width:70px;border-bottom:3px solid var(--fg)}
+.ch{padding:9px 13px;margin:4px;border-radius:12px;border:2px solid var(--bd);background:var(--card);font-size:17px}
+#built{min-height:58px;border:2px dashed var(--bd);border-radius:12px;padding:4px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cd{min-height:74px;border-radius:12px;border:2px solid var(--bd);background:var(--fg);color:var(--card);font-size:15px;font-weight:700;padding:4px}
+.cd.up{background:var(--card);color:var(--fg)}.cd.done{background:var(--ok);color:#fff;border-color:var(--ok)}
+.big{font-size:30px;font-weight:800;color:var(--fg)}
+#fb{font-weight:700;color:var(--fg);min-height:24px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== DATA: tambah meeting baru cukup salin satu blok di sini =====
+ mcq:[soal,[pilihan],indexBenar]  gap:[soal,[jawaban diterima]]  ord:[kalimat]  pr:[[Inggris,Indonesia]] */
+const D={
+1:{n:"Daily Routine Quest",e:"⏰",
+mcq:[["She ___ up at six every day.",["wake","wakes","waking"],1],["Which word means 100%?",["never","always","rarely","sometimes"],1],["study → He ___ English.",["studys","studies","studyes"],1],["I ___ go to school by bus. (80%)",["never","usually","rarely"],1],["Which sentence is correct?",["He go to school.","He goes to school.","He gos to school."],1],["My brother ___ breakfast at seven.",["have","has","haves"],1]],
+gap:[["My sister ___ (watch) TV every night.",["watches"]],["They ___ (do) homework after school.",["do"]],["She ___ (have) breakfast at seven.",["has"]],["He ___ (study) English at night.",["studies"]],["I ___ (go) to bed at ten.",["go"]]],
+ord:["I wake up at six.","She usually goes to school by bus.","They never watch TV in the morning."],
+pr:[["wake up","bangun"],["take a shower","mandi"],["have breakfast","sarapan"],["do homework","mengerjakan PR"],["go to bed","pergi tidur"],["always","selalu"]]},
+2:{n:"Free Time Quest",e:"🎮",
+mcq:[["Does she ___ games?",["play","plays","playing"],0],["I love ___ comics.",["read","reading","to reads"],1],["swim → I like ___.",["swiming","swimming","swimmin"],1],["Which sentence is correct?",["She doesn’t plays games.","She doesn’t play games.","She don’t play games."],1],["___ you like cooking?",["Do","Does","Are"],0],["Which word shows the strongest dislike?",["like","don’t mind","hate","enjoy"],2]],
+gap:[["___ he play football? (Do/Does)",["does"]],["She doesn’t ___ (like) cooking.",["like"]],["I enjoy ___ (ride) a bike.",["riding"]],["___ they like music? (Do/Does)",["do"]],["My dad loves ___ (cook).",["cooking"]]],
+ord:["Do you like cooking?","She doesn’t play games every day.","I hate waking up early."],
+pr:[["draw","menggambar"],["cook","memasak"],["listen to music","mendengarkan musik"],["ride a bike","naik sepeda"],["take photos","memotret"],["read comics","membaca komik"]]},
+3:{n:"Right Now Quest",e:"📱",
+mcq:[["Look! She ___ now.",["cooks","is cooking","cooking"],1],["Which is a right-now clue?",["usually","at the moment","every day","never"],1],["They ___ playing.",["is","am","are"],2],["Which sentence is correct?",["He cooking.","He is cooking.","He are cooking."],1],["Which sentence is a habit?",["I am walking now.","I usually walk to school.","Look! I am walking."],1],["Is she dancing? No, ___",["she isn’t","she doesn’t","she not"],0]],
+gap:[["Listen! They ___ (sing).",["are singing"]],["I ___ (take) a selfie right now.",["am taking"]],["She ___ (not / sleep) now.",["isn’t sleeping","is not sleeping"]],["___ he swimming? (Is/Are)",["is"]],["We ___ (eat) noodles at the moment.",["are eating"]]],
+ord:["She is brushing her teeth now.","Are they playing football?","I am not sleeping in class."],
+pr:[["brush teeth","menyikat gigi"],["take a selfie","berswafoto"],["dance","menari"],["sleep","tidur"],["swim","berenang"],["sing","bernyanyi"]]},
+4:{n:"Last Weekend Quest",e:"🛍️",
+mcq:[["Past form of go?",["goed","went","gone"],1],["Past form of study?",["studyed","studied","studdied"],1],["Past form of stop?",["stoped","stopped","stopt"],1],["We ___ a movie yesterday.",["watch","watched","watching"],1],["Past form of buy?",["buyed","bought","boughted"],1],["“wanted” ends with which sound?",["/t/","/d/","/ɪd/"],2]],
+gap:[["I ___ (visit) my grandma last Sunday.",["visited"]],["We ___ (go) to the beach yesterday.",["went"]],["She ___ (study) for her test last night.",["studied"]],["My brother ___ (eat) three bowls of noodles!",["ate"]],["I ___ (see) a cute cat this morning.",["saw"]]],
+ord:["Dina went to the mall with Sari.","We watched a movie last night.","She bought a new comic book."],
+pr:[["go","went"],["have","had"],["eat","ate"],["see","saw"],["buy","bought"],["make","made"]]}
+};
+
+const $=s=>document.querySelector(s),app=$("#app");
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const nm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[.?!,]/g,"").replace(/\s+/g," ").trim();
+let sel="all",name="",T;
+const pool=k=>sel==="all"?Object.values(D).flatMap(m=>m[k]):D[sel][k];
+const lab=()=>sel==="all"?"Mix":"Meeting "+sel;
+const LOGO=`<div class="logo"><svg viewBox="0 0 260 66" role="img" aria-label="EXA Academy"><path d="M8 4h84a8 8 0 0 1 8 8v30a8 8 0 0 1-8 8H36L22 63V50H8a8 8 0 0 1-8-8V12a8 8 0 0 1 8-8z" fill="#1B2A4A"/><text x="50" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="25" fill="#fff">E<tspan fill="#FF6B6B">X</tspan>A</text><text x="110" y="25" font-family="Arial,sans-serif" font-weight="800" font-size="15" fill="#1B2A4A">EXA ACADEMY</text><text x="110" y="40" font-family="Arial,sans-serif" font-size="8.6" fill="#4A5878">English for eXcellent Achievers</text></svg></div>`;
+const bar=(i,n,s)=>`<div class="top"><button class="x" id="hm">🏠</button><span>${i+1} / ${n}</span><span>⭐ ${s}</span></div>`;
+const fb=t=>{$("#fb").textContent=t};
+
+function home(){
+ clearInterval(T);
+ app.innerHTML=LOGO+`<div class="card"><h1>Exa Teens Quest 🧭</h1><p><b>Homework Games</b></p><p>Main game, latih English-mu, kumpulkan bintang!</p>
+ <input id="nm" placeholder="Nama kamu" maxlength="30">
+ <b>Pilih materi:</b><div class="chips">${Object.entries(D).map(([k,m])=>`<button class="chip ${sel==k?"on":""}" data-k="${k}">${m.e} ${k}. ${m.n}</button>`).join("")}<button class="chip ${sel=="all"?"on":""}" data-k="all">🔀 Mix</button></div></div>
+ <button class="mode" data-g="quiz">⚡ Quiz Battle<small>Pilih jawaban sebelum waktu habis. Streak = bonus poin!</small></button>
+ <button class="mode" data-g="typ">⌨️ Type It!<small>Isi titik-titik dengan bentuk kata yang benar.</small></button>
+ <button class="mode" data-g="ord">🧩 Word Order<small>Susun kata jadi kalimat yang benar.</small></button>
+ <button class="mode" data-g="mat">🃏 Match Up<small>Cocokkan kartu kata dan artinya.</small></button>`;
+ $("#nm").value=name;$("#nm").oninput=e=>name=e.target.value;
+ app.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{sel=b.dataset.k;home()});
+ app.querySelectorAll(".mode").forEach(b=>b.onclick=()=>({quiz,typ,ord,mat})[b.dataset.g]());
+}
+const wire=()=>{const h=$("#hm");if(h)h.onclick=home};
+
+function quiz(){
+ const qs=sh(pool("mcq")).slice(0,10);let i=0,sc=0,st=0,ok=0,tl=15;
+ const nxt=()=>{
+  if(i>=qs.length)return end("Quiz Battle",sc,ok,qs.length);
+  const [q,o,a]=qs[i];tl=15;
+  app.innerHTML=LOGO+bar(i,qs.length,sc)+`<div class="card"><div class="tm"><i id="tb"></i></div><h2>${q}</h2>${sh(o.map((x,j)=>j)).map(j=>`<button class="o" data-j="${j}">${o[j]}</button>`).join("")}<p id="fb"></p></div>`;
+  wire();
+  const pick=j=>{clearInterval(T);app.querySelectorAll(".o").forEach(b=>{b.disabled=true;if(+b.dataset.j===a)b.classList.add("ok");else if(+b.dataset.j===j)b.classList.add("no")});
+   if(j===a){ok++;st++;sc+=100+Math.round(tl*3)+Math.min(st,5)*10;fb("✅ Benar!"+(st>1?" 🔥 streak x"+st:""))}else{st=0;fb(j<0?"⏰ Waktu habis! Jawaban: "+o[a]:"❌ Jawaban: "+o[a])}
+   i++;setTimeout(nxt,1500)};
+  app.querySelectorAll(".o").forEach(b=>b.onclick=()=>pick(+b.dataset.j));
+  T=setInterval(()=>{tl-=.1;$("#tb").style.width=Math.max(tl/15*100,0)+"%";if(tl<=0)pick(-1)},100);
+ };nxt();
+}
+
+function typ(){
+ const qs=sh(pool("gap")).slice(0,8);let i=0,sc=0,ok=0;
+ const nxt=()=>{
+  if(i>=qs.length)return end("Type It!",sc,ok,qs.length);
+  const [q,a]=qs[i];
+  app.innerHTML=LOGO+bar(i,qs.length,sc)+`<div class="card"><h2>${q.replace("___",'<span class="bl"></span>')}</h2><input id="ans" autocomplete="off" autocapitalize="off" placeholder="Ketik jawabanmu"><button class="b" id="go">Check ✔</button><p id="fb"></p></div>`;
+  wire();const inp=$("#ans"),go=$("#go");inp.focus();let done=false;
+  const chk=()=>{
+   if(done){i++;return nxt()}
+   done=true;inp.disabled=true;
+   if(a.some(x=>nm(x)===nm(inp.value))){ok++;sc+=100;fb("✅ Benar! +100")}else fb("❌ Jawaban: "+a[0]);
+   go.textContent="Next ➜";go.focus();
+  };
+  go.onclick=chk;inp.onkeydown=e=>{if(e.key==="Enter")chk()};
+ };nxt();
+}
+
+function ord(){
+ const qs=sh(pool("ord")).slice(0,6);let i=0,sc=0,ok=0;
+ const nxt=()=>{
+  if(i>=qs.length)return end("Word Order",sc,ok,qs.length);
+  const s=qs[i],w=sh(s.split(" ")),b=[];let done=false;
+  app.innerHTML=LOGO+bar(i,qs.length,sc)+`<div class="card"><h2>Susun kalimatnya:</h2><div id="built"></div><div id="bank"></div><button class="b" id="go">Check ✔</button><p id="fb"></p></div>`;
+  wire();
+  const draw=()=>{$("#built").innerHTML=b.map(j=>`<button class="ch" data-j="${j}">${w[j]}</button>`).join("");
+   $("#bank").innerHTML=w.map((x,j)=>b.includes(j)?"":`<button class="ch" data-j="${j}">${x}</button>`).join("")};
+  $("#bank").onclick=e=>{const j=e.target.dataset.j;if(j!==undefined&&!done){b.push(+j);draw()}};
+  $("#built").onclick=e=>{const j=e.target.dataset.j;if(j!==undefined&&!done){b.splice(b.indexOf(+j),1);draw()}};
+  $("#go").onclick=()=>{
+   if(done){i++;return nxt()}
+   if(b.length<w.length)return fb("Pakai semua kata dulu ya 🙂");
+   done=true;
+   if(nm(b.map(j=>w[j]).join(" "))===nm(s)){ok++;sc+=100;fb("✅ Benar! +100")}else fb("❌ Seharusnya: "+s);
+   $("#go").textContent="Next ➜";
+  };draw();
+ };nxt();
+}
+
+function mat(){
+ const ps=sh(pool("pr")).slice(0,6);
+ const cs=sh(ps.flatMap(([a,b],k)=>[{t:a,k},{t:b,k}]));
+ let first=-1,lock=false,moves=0,pairs=0;
+ app.innerHTML=LOGO+`<div class="top"><button class="x" id="hm">🏠</button><span id="mv">Moves: 0</span><span>🃏 ${ps.length} pairs</span></div><div class="card"><div class="grid">${cs.map((c,j)=>`<button class="cd" data-j="${j}">?</button>`).join("")}</div><p id="fb"></p></div>`;
+ wire();
+ const B=app.querySelectorAll(".cd");
+ B.forEach((b,j)=>b.onclick=()=>{
+  if(lock||j===first||b.classList.contains("done"))return;
+  b.classList.add("up");b.textContent=cs[j].t;
+  if(first<0){first=j;return}
+  moves++;$("#mv").textContent="Moves: "+moves;
+  const a=first;first=-1;
+  if(cs[a].k===cs[j].k){B[a].classList.add("done");b.classList.add("done");
+   if(++pairs===ps.length){const s=moves<=ps.length+3?3:moves<=ps.length+7?2:1;setTimeout(()=>end("Match Up",Math.max(100,1000-(moves-ps.length)*40),ps.length,ps.length,s),700)}}
+  else{lock=true;setTimeout(()=>{[B[a],b].forEach(x=>{x.classList.remove("up");x.textContent="?"});lock=false},900)}
+ });
+}
+
+function end(g,sc,ok,n,s){
+ clearInterval(T);
+ const st=s||(ok/n>=.9?3:ok/n>=.6?2:1),
+  msg=["Keep practicing! 💪","Good job! 👍","Great job! 🌟","Excellent! 🏆"][st],
+  txt=`EXA Teens Homework | ${name||"Murid"} | ${g} | ${lab()} | ${sc} poin (${ok}/${n})`;
+ app.innerHTML=LOGO+`<div class="card c"><h1>${"⭐".repeat(st)}${"☆".repeat(3-st)}</h1><h2>${msg}</h2><p>${name?name+" · ":""}${g} · ${lab()}</p><p class="big">${sc} poin</p><p>${ok} / ${n} benar</p>
+ <button class="b" id="cp">📋 Salin hasil untuk guru</button><button class="b" id="ag">🔁 Main lagi</button><button class="b" id="mn">🏠 Menu</button><p id="fb"></p></div>`;
+ $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(txt);fb("Tersalin! Kirim ke gurumu ya ✅")}catch(e){fb(txt)}};
+ $("#ag").onclick=()=>({"Quiz Battle":quiz,"Type It!":typ,"Word Order":ord,"Match Up":mat})[g]();
+ $("#mn").onclick=home;
+}
+home();
+</script>
+</body>
+</html>
